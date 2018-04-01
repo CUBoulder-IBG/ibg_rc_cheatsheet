@@ -1,8 +1,3 @@
----
-documentclass: extreport
-fontsize: 9pt
----
-
 # CU Research Computing Cheatsheet
 
 ### Summit partitions
