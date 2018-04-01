@@ -1,7 +1,3 @@
----
-documentclass: extreport
-fontsize: 9pt
----
 
 # CU Research Computing Cheatsheet
 
@@ -48,3 +44,7 @@ QOS name | Description                            | Max walltime       | Max job
 
  - [Batch scheduling and Summit specifications](https://www.rc.colorado.edu/support/user-guide/batch-queueing.html)
  - [Blanca resources](https://www.rc.colorado.edu/support/user-guide/compute-resources.html#blanca)
+
+### Compiling to pdf 
+To compile run `bash compile.sh` (requires pandoc).
+

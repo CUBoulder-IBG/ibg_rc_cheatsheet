@@ -1,8 +1,6 @@
 #!/bin/bash
-pandoc curc.md -o curc.pdf -H header.sty -V documentclass=extreport -V fontsize=9pt
+pandoc curc.md -o curc.pdf -V documentclass=extreport -V fontsize=9pt -H header.sty 
 
-cat curc.md > README.md
+cp curc.md README.md
 
-echo "
-### Compiling to pdf 
-To compile run `bash compile.sh` (requires pandoc)." >> README.md
+cat footer.txt >> README.md
