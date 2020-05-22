@@ -7,7 +7,7 @@
 
 
 ```
- sinfo  --Node -o  "%.12N %.16P %.11T %.4c %.13C %.8e /%.8m %.30f"sinfo
+ sinfo  --Node -o  "%.12N %.16P %.11T %.4c %.13C %.8e /%.8m %.30f"
 ```
 
  - `NODELIST` is the name of the node, can be specified when submitting via --nodelist
