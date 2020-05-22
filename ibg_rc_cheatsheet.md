@@ -1,14 +1,4 @@
 
-Table of Contents
-=================
-
-   * [CU Research Computing Cheatsheet](#cu-research-computing-cheatsheet)
-      * [Monitoring Slurm Activity](#monitoring-slurm-activity)
-         * [View available nodes and their properties:](#view-available-nodes-and-their-properties)
-         * [Useful links](#useful-links)
-
-Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
-
 # CU Research Computing Cheatsheet
 
 ## Monitoring Slurm Activity
