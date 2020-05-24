@@ -170,7 +170,7 @@ program <args> \
     --model $model"
 ```
 
-- You can always double check that you didn't screw something up by running a simple nested loop (in the shell):
+You can always double check that you didn't screw something up by running a simple loop (in the shell):
 
 ```bash
 inputArray=(modelA modelB)
