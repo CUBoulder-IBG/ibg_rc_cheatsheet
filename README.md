@@ -24,7 +24,7 @@ IBG Research Computing Cheatsheet
    * [Useful links](#useful-links)
    * [Modifying this README](#modifying-this-readme)
 
-<!-- Added by: rsb, at: Sun May 24 17:45:49 MDT 2020 -->
+<!-- Added by: rsb, at: Sun May 24 17:47:00 MDT 2020 -->
 
 <!--te-->
 
@@ -161,7 +161,7 @@ outputArray=(outputA outputB outputC)
 input=${inputArray[$ii]}
 output=${outputArray[$ii]}
 
-ml load <modules>sing integer arithmetic
+ml load <modules>
 
 
 program <args> \

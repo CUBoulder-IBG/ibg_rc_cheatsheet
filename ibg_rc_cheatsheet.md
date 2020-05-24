@@ -131,7 +131,7 @@ outputArray=(outputA outputB outputC)
 input=${inputArray[$ii]}
 output=${outputArray[$ii]}
 
-ml load <modules>sing integer arithmetic
+ml load <modules>
 
 
 program <args> \
