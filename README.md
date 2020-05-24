@@ -11,7 +11,7 @@ IBG Research Computing Cheatsheet
    * [Useful links](#useful-links)
    * [Modifying this README](#modifying-this-readme)
 
-<!-- Added by: rsb, at: Sun May 24 11:59:04 MDT 2020 -->
+<!-- Added by: rsb, at: Sun May 24 12:03:11 MDT 2020 -->
 
 <!--te-->
 
@@ -48,6 +48,7 @@ IBG Research Computing Cheatsheet
  - `STATE` - mixed means that some of the `CPUS` are in use (see below)
  - `CPUS(A/I/O/T)` - on a given node: allocated/idle/other/total nodes
  - `FREE_MEM /  MEMORY` free memory / total memory in MB (divide by 1024 to convert to GB
+
 
 
 # Useful links
