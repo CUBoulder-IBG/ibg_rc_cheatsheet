@@ -7,6 +7,8 @@ IBG Research Computing Cheatsheet
          * [View your running jobs:](#view-your-running-jobs)
          * [View your completed jobs:](#view-your-completed-jobs)
          * [Measure performance of completed jobs:](#measure-performance-of-completed-jobs)
+            * [Display jobs completed since a particular date](#display-jobs-completed-since-a-particular-date)
+            * [Display jobs' timing and memory usage](#display-jobs-timing-and-memory-usage)
          * [View available nodes and their properties:](#view-available-nodes-and-their-properties)
       * [Example jobs](#example-jobs)
          * [Interactive session](#interactive-session)
@@ -16,7 +18,7 @@ IBG Research Computing Cheatsheet
    * [Useful links](#useful-links)
    * [Modifying this README](#modifying-this-readme)
 
-<!-- Added by: rsb, at: Sun May 24 12:10:11 MDT 2020 -->
+<!-- Added by: rsb, at: Sun May 24 12:27:21 MDT 2020 -->
 
 <!--te-->
 
@@ -37,8 +39,18 @@ IBG Research Computing Cheatsheet
 
 ### Measure performance of completed jobs:
 
+The following flags can be combined to suit your needs
+
+#### Display jobs completed since a particular date 
+
 ```
- ---
+sacct -S <MMDD>
+```
+
+#### Display jobs' timing and memory usage
+
+```
+sacct -o 'jobid%20,jobname%16,state,elapsed,maxrss'
 ```
 
 
@@ -71,4 +83,4 @@ IBG Research Computing Cheatsheet
 
 # Modifying this README
 
-Do not directly modify this document directly. Instead modify `ibg_rc_cheatsheet.md` and run `compile.sh` to add TOC create printable version. This will also update the README. You might need to make `gh-md-toc` executable via `chmod a+x gh-md-toc` and you definitely will need to install pandoc.
+Do not directly modify this document directly. Instead modify `ibg_rc_cheatsheet.md` and run `compile.sh` to add TOC and create printable version. This will also update the README displayed on github. You might need to make `gh-md-toc` executable via `chmod a+x gh-md-toc` and you definitely will need to install pandoc. TOC generation powered by [github-markdown-toc](https://github.com/ekalinin/github-markdown-toc)
