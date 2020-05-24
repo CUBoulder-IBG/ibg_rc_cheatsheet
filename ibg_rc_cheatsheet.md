@@ -32,4 +32,12 @@
  - `CPUS(A/I/O/T)` - on a given node: allocated/idle/other/total nodes
  - `FREE_MEM / MEMORY` free memory / total memory in MB (divide by 1024 to convert to GB
 
+## Example jobs
 
+### Interactive session
+
+### Preemptable job
+
+### Job array with single index
+
+### Job array with multiple indices
