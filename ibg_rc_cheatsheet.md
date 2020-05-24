@@ -15,8 +15,18 @@
 
 ### Measure performance of completed jobs:
 
+The following flags can be combined to suit your needs
+
+#### Display jobs completed since a particular date 
+
 ```
- ---
+sacct -S <MMDD>
+```
+
+#### Display jobs' timing and memory usage
+
+```
+sacct -o 'jobid%20,jobname%16,state,elapsed,maxrss'
 ```
 
 
