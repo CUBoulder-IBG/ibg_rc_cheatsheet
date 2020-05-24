@@ -8,10 +8,15 @@ IBG Research Computing Cheatsheet
          * [View your completed jobs:](#view-your-completed-jobs)
          * [Measure performance of completed jobs:](#measure-performance-of-completed-jobs)
          * [View available nodes and their properties:](#view-available-nodes-and-their-properties)
+      * [Example jobs](#example-jobs)
+         * [Interactive session](#interactive-session)
+         * [Preemptable job](#preemptable-job)
+         * [Job array with single index](#job-array-with-single-index)
+         * [Job array with multiple indices](#job-array-with-multiple-indices)
    * [Useful links](#useful-links)
    * [Modifying this README](#modifying-this-readme)
 
-<!-- Added by: rsb, at: Sun May 24 12:03:11 MDT 2020 -->
+<!-- Added by: rsb, at: Sun May 24 12:10:11 MDT 2020 -->
 
 <!--te-->
 
@@ -47,9 +52,17 @@ IBG Research Computing Cheatsheet
  - `PARTITION` is the name of the partition. You likely will never need to use this unless you want a particular partition of the preemptable queue
  - `STATE` - mixed means that some of the `CPUS` are in use (see below)
  - `CPUS(A/I/O/T)` - on a given node: allocated/idle/other/total nodes
- - `FREE_MEM /  MEMORY` free memory / total memory in MB (divide by 1024 to convert to GB
+ - `FREE_MEM / MEMORY` free memory / total memory in MB (divide by 1024 to convert to GB
 
+## Example jobs
 
+### Interactive session
+
+### Preemptable job
+
+### Job array with single index
+
+### Job array with multiple indices
 
 # Useful links
 
