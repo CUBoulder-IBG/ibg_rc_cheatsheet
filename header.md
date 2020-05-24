@@ -1,2 +1,7 @@
-# IBG Research Computing Cheatsheet
+IBG Research Computing Cheatsheet
+=========
+
+<!--ts-->
+
+<!--te-->
 

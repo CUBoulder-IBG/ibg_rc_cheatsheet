@@ -1,20 +1,19 @@
-# IBG Research Computing Cheatsheet
+IBG Research Computing Cheatsheet
+=========
 
-
-Table of Contents
-=================
-
+<!--ts-->
+   * [IBG Research Computing Cheatsheet](#ibg-research-computing-cheatsheet)
       * [Monitoring Slurm and Job Activity](#monitoring-slurm-and-job-activity)
          * [View your running jobs:](#view-your-running-jobs)
          * [View your completed jobs:](#view-your-completed-jobs)
          * [Measure performance of completed jobs:](#measure-performance-of-completed-jobs)
          * [View available nodes and their properties:](#view-available-nodes-and-their-properties)
-         * [Useful links](#useful-links)
-         * [Modifying this README](#modifying-this-readme)
+   * [Useful links](#useful-links)
+   * [Modifying this README](#modifying-this-readme)
 
-Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
+<!-- Added by: rsb, at: Sun May 24 11:59:04 MDT 2020 -->
 
-
+<!--te-->
 
 ## Monitoring Slurm and Job Activity
 
@@ -49,13 +48,13 @@ Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
  - `STATE` - mixed means that some of the `CPUS` are in use (see below)
  - `CPUS(A/I/O/T)` - on a given node: allocated/idle/other/total nodes
  - `FREE_MEM /  MEMORY` free memory / total memory in MB (divide by 1024 to convert to GB
- 
 
-### Useful links
+
+# Useful links
 
  - [Batch scheduling and Summit specifications](https://www.rc.colorado.edu/support/user-guide/batch-queueing.html)
  - [Blanca resources](https://www.rc.colorado.edu/support/user-guide/compute-resources.html#blanca)
 
-### Modifying this README
+# Modifying this README
 
 Do not directly modify this document directly. Instead modify `ibg_rc_cheatsheet.md` and run `compile.sh` to add TOC create printable version. This will also update the README. You might need to make `gh-md-toc` executable via `chmod a+x gh-md-toc` and you definitely will need to install pandoc.
