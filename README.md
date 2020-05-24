@@ -24,7 +24,7 @@ IBG Research Computing Cheatsheet
    * [Useful links](#useful-links)
    * [Modifying this README](#modifying-this-readme)
 
-<!-- Added by: rsb, at: Sun May 24 17:41:55 MDT 2020 -->
+<!-- Added by: rsb, at: Sun May 24 17:45:49 MDT 2020 -->
 
 <!--te-->
 
@@ -200,7 +200,7 @@ program <args> \
     --model $model"
 ```
 
-- You can always double check that you didn't screw something up by running a simple nested loop (in the shell):
+You can always double check that you didn't screw something up by running a simple loop (in the shell):
 
 ```bash
 inputArray=(modelA modelB)
