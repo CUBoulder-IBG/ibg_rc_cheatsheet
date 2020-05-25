@@ -3,6 +3,9 @@ IBG Research Computing Cheatsheet
 
 <!--ts-->
    * [IBG Research Computing Cheatsheet](#ibg-research-computing-cheatsheet)
+      * [Best Practices](#best-practices)
+         * [Memory and CPU allocation](#memory-and-cpu-allocation)
+         * [Choosing between preemptable and blanca-ibg](#choosing-between-preemptable-and-blanca-ibg)
       * [Monitoring Slurm and Job Activity](#monitoring-slurm-and-job-activity)
          * [Monitoring running jobs](#monitoring-running-jobs)
             * [View your running jobs](#view-your-running-jobs)
@@ -18,15 +21,29 @@ IBG Research Computing Cheatsheet
          * [Job arrays](#job-arrays)
             * [Job array with a single numeric index](#job-array-with-a-single-numeric-index)
             * [Job array with a single non-numeric index](#job-array-with-a-single-non-numeric-index)
-            * [Job array with a multiple simulataneous indices](#job-array-with-a-multiple-simulataneous-indices)
+            * [Job array with a multiple simultaneous indices](#job-array-with-a-multiple-simultaneous-indices)
             * [Job array with a multiple nested non-numeric indices](#job-array-with-a-multiple-nested-non-numeric-indices)
             * [Job array with a multiple nested indices, one numeric](#job-array-with-a-multiple-nested-indices-one-numeric)
    * [Useful links](#useful-links)
    * [Modifying this README](#modifying-this-readme)
 
-<!-- Added by: rsb, at: Sun May 24 17:47:00 MDT 2020 -->
+<!-- Added by: rsb, at: Mon May 25 14:15:26 MDT 2020 -->
 
 <!--te-->
+
+## Best Practices
+
+### Memory and CPU allocation
+
+```bash
+#placeholder
+```
+
+### Choosing between `preemptable` and `blanca-ibg`
+
+```bash
+#placeholder
+```
 
 ## Monitoring Slurm and Job Activity
 
@@ -142,7 +159,7 @@ program <args> \
 ```
 
 
-#### Job array with a multiple simulataneous indices
+#### Job array with a multiple simultaneous indices
 
 This script submit jobs in parallel for jobs with different inputs/outputs
 
@@ -171,7 +188,7 @@ program <args> \
 
 #### Job array with a multiple nested non-numeric indices
 
-This script submit jobs in parallel for jobs with arbitrary nested lists arguments (e.g., each model for each phenotype) using integer arithmetic. If this is unfamiliar, you can google "floor division bash" and "modulo bash".
+This script submit jobs in parallel for jobs with arbitrary nested lists of arguments (e.g., each model for each phenotype) using integer arithmetic. If this is unfamiliar, you can google "floor division bash" and "modulo bash".
 
 ```bash
 #!/bin/bash

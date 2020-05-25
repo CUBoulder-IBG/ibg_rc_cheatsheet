@@ -1,3 +1,17 @@
+## Best Practices
+
+### Memory and CPU allocation
+
+```bash
+#placeholder
+```
+
+### Choosing between `preemptable` and `blanca-ibg`
+
+```bash
+#placeholder
+```
+
 ## Monitoring Slurm and Job Activity
 
 ### Monitoring running jobs
@@ -112,7 +126,7 @@ program <args> \
 ```
 
 
-#### Job array with a multiple simulataneous indices
+#### Job array with a multiple simultaneous indices
 
 This script submit jobs in parallel for jobs with different inputs/outputs
 
@@ -141,7 +155,7 @@ program <args> \
 
 #### Job array with a multiple nested non-numeric indices
 
-This script submit jobs in parallel for jobs with arbitrary nested lists arguments (e.g., each model for each phenotype) using integer arithmetic. If this is unfamiliar, you can google "floor division bash" and "modulo bash".
+This script submit jobs in parallel for jobs with arbitrary nested lists of arguments (e.g., each model for each phenotype) using integer arithmetic. If this is unfamiliar, you can google "floor division bash" and "modulo bash".
 
 ```bash
 #!/bin/bash
