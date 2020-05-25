@@ -27,7 +27,7 @@ IBG Research Computing Cheatsheet
    * [Useful links](#useful-links)
    * [Modifying this README](#modifying-this-readme)
 
-<!-- Added by: rsb, at: Mon May 25 14:15:26 MDT 2020 -->
+<!-- Added by: rsb, at: Mon May 25 14:52:09 MDT 2020 -->
 
 <!--te-->
 
@@ -285,4 +285,4 @@ done
 
 # Modifying this README
 
-Do not directly modify this document directly. Instead modify `ibg_rc_cheatsheet.md` and run `compile.sh` to add TOC and create printable version. This will also update the README displayed on github. You might need to make `gh-md-toc` executable via `chmod a+x gh-md-toc` and you definitely will need to install pandoc. TOC generation powered by [github-markdown-toc](https://github.com/ekalinin/github-markdown-toc)
+Do not directly modify this document directly. Instead modify `ibg_rc_cheatsheet.md` and run `compile.sh` to add TOC and create printable version. This will also update the README displayed on github. You might need to make `gh-md-toc` executable via `chmod a+x gh-md-toc` and you definitely will need to install pandoc and xelatex. TOC generation powered by [github-markdown-toc](https://github.com/ekalinin/github-markdown-toc).
