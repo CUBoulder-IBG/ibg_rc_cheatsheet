@@ -3,7 +3,7 @@ IBG Research Computing Cheatsheet
 
 <!--ts-->
    * [IBG Research Computing Cheatsheet](#ibg-research-computing-cheatsheet)
-      * [Best Practices](#best-practices)
+      * [Best practices](#best-practices)
          * [Memory and CPU allocation](#memory-and-cpu-allocation)
          * [Choosing between preemptable and blanca-ibg](#choosing-between-preemptable-and-blanca-ibg)
       * [Monitoring Slurm and Job Activity](#monitoring-slurm-and-job-activity)
@@ -24,14 +24,15 @@ IBG Research Computing Cheatsheet
             * [Job array with a multiple simultaneous indices](#job-array-with-a-multiple-simultaneous-indices)
             * [Job array with a multiple nested non-numeric indices](#job-array-with-a-multiple-nested-non-numeric-indices)
             * [Job array with a multiple nested indices, one numeric](#job-array-with-a-multiple-nested-indices-one-numeric)
+      * [Defining custom functions](#defining-custom-functions)
    * [Useful links](#useful-links)
    * [Modifying this README](#modifying-this-readme)
 
-<!-- Added by: rsb, at: Mon May 25 14:52:09 MDT 2020 -->
+<!-- Added by: rsb, at: Wed May 27 12:18:37 MDT 2020 -->
 
 <!--te-->
 
-## Best Practices
+## Best practices
 
 ### Memory and CPU allocation
 
@@ -111,6 +112,8 @@ sacct -o 'jobid%20,jobname%16,state,elapsed,maxrss'
 
 ### Job arrays
 
+Job arrays provide a clean method for subbmitting collections of jobs and are often preferable to either i. using a loop to submit multiple jobs or ii. using a loop within a single job to accomplish multiple tasks. Note that the resources you request apply to each job individually, not to the collection of jobs. E.g., if each of 10 tasks requires 50gb of memory, you only need to request 50gb, not 500gb.
+
 #### Job array with a single numeric index
 
 ```bash
@@ -180,7 +183,6 @@ output=${outputArray[$ii]}
 
 ml load <modules>
 
-
 program <args> \
     --input $input \
     --output $output
@@ -199,7 +201,6 @@ This script submit jobs in parallel for jobs with arbitrary nested lists of argu
 
 ii=${SLURM_ARRAY_TASK_ID}
 
-
 inputArray=(phenoA phenoB phenoC)
 modelArray=(modelA modelB)
 
@@ -208,7 +209,6 @@ modelIndex=$(expr $ii / 3)
 
 input=${inputArray[$inputIndex]}
 model=${modelArray[$modelIndex]}
-
 
 ml load <modules>
 
@@ -249,7 +249,6 @@ You can frequently simplify things when one the lists you iterate over is numeri
 
 ii=${SLURM_ARRAY_TASK_ID}
 
-
 inputArray=(phenoA phenoB phenoC)
 
 inputIndex=$(expr $ii / 22)
@@ -277,6 +276,21 @@ do
     echo chrom:"$chrom" pheno:"$input"
 done
 ```
+
+
+
+## Defining custom functions
+
+Commands that are lengthy to type in or that you frequently used can be turned into functions to save time. To do so, add something along the following lines to `~/.my.bashrc`
+
+```bash
+function Sinfo() {
+sinfo  --Node -o  "%.12N %.16P %.11T %.4c %.13C %.8e /%.8m %.30f"
+}
+export -f Sinfo
+```
+
+Then call `source ~/.my.bashrc` and you should be able to use `Sinfo` in place of the longer command above.
 
 # Useful links
 
