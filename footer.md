@@ -1,8 +1,7 @@
 
 # Useful links
 
- - [Batch scheduling and Summit specifications](https://www.rc.colorado.edu/support/user-guide/batch-queueing.html)
- - [Blanca resources](https://www.rc.colorado.edu/support/user-guide/compute-resources.html#blanca)
+ - [Official RC documentation](https://curc.readthedocs.io/en/latest/)
 
 # Modifying this README
 
