@@ -1,16 +1,30 @@
 ## Best practices
 
-### Memory and CPU allocation
+We all share resources--learning to effectively manage these resources not only increases the efficiency of your work but that of your colleagues. Here are a few principles to consider when allocating resources.
 
-```bash
-#placeholder
-```
+1. Memory and CPU usage should be proportional.
 
-### Choosing between `preemptable` and `blanca-ibg`
+This principle is best demonstrated via example: the himem nodes `bnode0412`- `bnode0414` have 976gb of RAM and 64 logical cores each. For a job that requires 300gb of RAM, you'll want to request 300/976 * 64 ≈ 20 tasks (`--N 1 --mem 300gb --ntasks 20`; always request cpus in multiples of two, because of hyperthreading slurm will round up anyways). This helps maximize the amount of work we can accomplish simulatenously. E.g., if you were to submit 8 jobs requiring 10gb of RAM and 8 tasks each, you would be using all 64 cores (100% of cpu power) but only 80/976 gb of ram (8% of total memory), rendering the remaining RAM unusuable by anyone. Total memory and cpus vary by node, so you should consider which nodes are best for a given task an use the appropriate constraints (see 'View available nodes and their properties').
 
-```bash
-#placeholder
-```
+2. Use the preemptable QOS when possible
+
+Most of Blanca is idle at any given time--the preemptable QOS provides access to all nodes and has the dual benefits of increasing the amount of computing you can accomplish in a given time frame while freeing speciality hardware (himem nodes) for applications that can only node on those nodes. You should consider the preemptable QOS for any job that requires fewer than 170gb of ram and will complete in less than a day. Situations where you might NOT want/be able to use the preemptable QOS include: jobs that require more than day to finish, jobs that require more than 170gb of memory, debugging small instances of single jobs before submitting many preemptable jobs, small interactive sessions.
+
+3. Prototype/debug before submitting large numbers of jobs
+
+If you're unsure how much memory/how many cpus a particular task will require, make sure you figure it out before submitting many such jobs. Methods for checking memory use are provided in the next session. You can also directly `ssh` into any node where you have currently running jobs and use `top` or `htop` to examine cpu / memory use in real time. If you find that a job is taking longer than you expected, investigate and cancel if necessary rather than waiting for it to time out.
+
+
+4. Big jobs are fragile
+
+Big here means consisting of many small tasks or consisting of one giant task that could be split up into smaller tasks. To the extent than you are able, you should discretize large tasks into many small tasks. This makes your workflow more fault tolerant (if some step goes wrong, you don't have to rerun everything) and easier to efficiently allocate resources (e.g., if a job that would take four days can be split into multiple jobs that take less than one day, you can use the premptable QOS; this will most likely finish faster while simulatenously freeing speciality resources--i.e. himem nodes--so they'll be available to your colleages). Simple strategies for reducing job fragility include:
+ - avoid using loops within jobs (consider job-arrays instead)
+ - avoid grouping multiple tasks (e.g., GWAS and summary statistic clumping) in a single job
+ - read documentation to determine if jobs can be split into discrete chunks and then do so (e.g. using `--make-grm-part` in GCTA can allow you to run several fast, low memory, preemptable jobs, often simultaneously, instead of one multi-day job that requires a himem node)
+
+5. Ask for help
+
+If you're having difficulty figuring out how to get your jobs to run efficiently (or run at all) don't hesitate to ask for help from your colleagues.
 
 ## Monitoring Slurm and Job Activity
 
@@ -24,7 +38,7 @@ squeue -u $USER
 - Custom output described in man page. E.g., I find `squeue -o "%.12i %.18j %.16q %.8T %.10M %.12l %.24R"` easier to read
 
 
-#### View running jobs on a a particular qos
+#### View running jobs on a particular qos
 
 ```bash
 squeue -q <QOS>
@@ -62,18 +76,33 @@ sacct -o 'jobid%20,jobname%16,state,elapsed,maxrss'
 
 ## Example jobs
 
+Here are some example jobs as templates--the actual resources requested should be adjusted to fit your needs.
+
 ### Basics
 
 #### Interactive jobs
 
 ```bash
-#placeholder
+sinteractive --qos preemptable --mem 64gb --ntasks 12 --time 2:00:00
+```
+or
+
+```bash
+sinteractive --qos blanca-ibg --mem 64gb --ntasks 16 --time 2:00:00 --constraint haswell
 ```
 
 #### Preemptable job
 
 ```bash
-#placeholder
+#!/bin/bash
+#SBATCH --qos=preemptable
+#SBATCH --mem=100gb
+#SBATCH --time=<D-HH:MM> or <HH:MM:SS> # must be at most one day
+#SBATCH --ntasks=24
+#SBATCH --nodes=1
+#SBATCH --array=1-22
+#SBATCH -J <jobname>
+#SBATCH -o <output dir>/<jobname>_%a
 ```
 
 ### Job arrays
