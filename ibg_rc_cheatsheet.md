@@ -286,3 +286,78 @@ export -f Sinfo
 ```
 
 Then call `source ~/.my.bashrc` and you should be able to use `Sinfo` in place of the longer command above.
+
+## SSH connections to RC and X11 forwarding
+
+SSH can be configured to use a single channel to connect to RC. This means that you only have to enter your password and use Duo once, and subsequent connections will reuse the existing channel.
+
+### Mac or Linux
+
+On a Mac or Linux a persistent SSH is created by editing the `~/.ssh/config`, which is the `config` file in your home directory, and then in the `.ssh` directory. An entry needs to be added:
+
+```bash
+# These rules only apply for connections to login.rc.colorado.edu
+Host login.rc.colorado.edu
+# Setup a master ssh session the first time, and subsequent times
+# use the existing master connection
+ControlMaster auto
+ControlPath ~/.ssh/%r@%h:%p
+# Keep the ssh connection open, even when the last session closes
+ControlPersist yes
+# X forwarding. Remove this on a Mac if you don't want it to
+# start X11 each time you connect to RC
+ForwardX11 yes
+# Compress the data stream.
+Compression yes
+# Send keep alive packets to prevent disconnects from
+# CU wireless and behind NAT devices
+ServerAliveInterval 60
+```
+
+### Mac X11
+
+[XQuarts](https://www.xquartz.org/) is an open-source X11 server for Macs. To install it, download and install the DMG file from the XQuarts project.
+
+### Windows
+
+#### PuTTY
+
+[PuTTT](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) can be configured to share a single SSH connection. The best way to do this is to create saved session for RC.
+
+Open PuTTY, and put your username and RC login host into the Host Name field: `ralphie@login.rc.colorado.edu`. In the left menu, click on the SSH entry, and select the box at "Share SSH connections if possible". As long as the original login window is open, additional logins can be created without re-entering your password.
+
+If you would like to setup X11 forwarding, click the "+" at SSH, and then select the X11 entry. Select the box at "Enable X11 forwarding". X11 forwarding requires a [local X11](#winx11) server to be installed on Windows.
+
+Once the desired options have been selected, return to the "Session" entry in the left menu, and enter a name such as `RC` into the "Saved Sessions" field. Then click `Save` to save the session.
+
+The saved session can be used by double clicking on it. 
+
+#### Bitvise
+
+[Bitvise](https://www.bitvise.com/) has a freely available SSH client for Windows. [Download](https://www.bitvise.com/ssh-client-download) and install the client software.
+
+Once installed, run it and then click "New Profile" on the left, and
+give it a name, such as `RC`. By default it will save the profiles in
+your Documents folder.
+
+Into the "Host" field enter `login.rc.colorado.edu`, and into the "Username"
+field put in your identikey username.
+
+To setup X11 forwarding click on the "Terminal" tab at the top, and under "X11 Forwarding" select the box near "Enable". This will require installing an [X11 server](#winx11).
+
+Then click "Save profile" on the left.
+
+Then click "Log in" at the bottom. That will bring up a prompt to enter your
+password, and then accept the Duo prompt on your phone.
+
+That should bring up a terminal window and a file transfer window. To get
+more terminal windows, click on the "New terminal console" button on the
+left. Additional file transfer windows can be created by clicking the "New
+sftp window" button. It is not necessary to enter a password or use Duo for
+additional windows.
+
+No additional settings are necessary to use a persistent connection, as Bitvise will automatically reuse the existing connection for future terminal and file transfer connections.
+
+#### X11 {#winx11}
+
+[Xming](http://www.straightrunning.com/XmingNotes/) is available for free. On the Xming page go to the "Public Domain Releases" and then download and install the [Xming](https://sourceforge.net/projects/xming/files/Xming/6.9.0.31/Xming-6-9-0-31-setup.exe/download) and [Xming-fonts](https://sourceforge.net/projects/xming/files/Xming-fonts/7.7.0.10/Xming-fonts-7-7-0-10-setup.exe/download) packages.

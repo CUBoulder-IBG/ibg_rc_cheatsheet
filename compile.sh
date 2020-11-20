@@ -7,7 +7,7 @@ pandoc README.md -o ibg_rc_cheatsheet.pdf \
 	-V documentclass=extreport \
 	-V mainfont="DejaVu Sans" \
 	-V monofont="Source Code Pro" \
-	--latex-engine xelatex \
+	--pdf-engine xelatex \
 	-V fontsize=11pt 
 
 cat footer.md >> README.md
