@@ -326,7 +326,7 @@ ServerAliveInterval 60
 
 Open PuTTY, and put your username and RC login host into the Host Name field: `ralphie@login.rc.colorado.edu`. In the left menu, click on the SSH entry, and select the box at "Share SSH connections if possible". As long as the original login window is open, additional logins can be created without re-entering your password.
 
-If you would like to setup X11 forwarding, click the "+" at SSH, and then select the X11 entry. Select the box at "Enable X11 forwarding". X11 forwarding requires a [local X11](#winx11) server to be installed on Windows.
+If you would like to setup X11 forwarding, click the "+" at SSH, and then select the X11 entry. Select the box at "Enable X11 forwarding". X11 forwarding requires a [local X11](#X11) server to be installed on Windows.
 
 Once the desired options have been selected, return to the "Session" entry in the left menu, and enter a name such as `RC` into the "Saved Sessions" field. Then click `Save` to save the session.
 
@@ -343,7 +343,7 @@ your Documents folder.
 Into the "Host" field enter `login.rc.colorado.edu`, and into the "Username"
 field put in your identikey username.
 
-To setup X11 forwarding click on the "Terminal" tab at the top, and under "X11 Forwarding" select the box near "Enable". This will require installing an [X11 server](#winx11).
+To setup X11 forwarding click on the "Terminal" tab at the top, and under "X11 Forwarding" select the box near "Enable". This will require installing an [X11 server](#X11).
 
 Then click "Save profile" on the left.
 
@@ -358,6 +358,6 @@ additional windows.
 
 No additional settings are necessary to use a persistent connection, as Bitvise will automatically reuse the existing connection for future terminal and file transfer connections.
 
-#### X11 {#winx11}
+#### X11
 
 [Xming](http://www.straightrunning.com/XmingNotes/) is available for free. On the Xming page go to the "Public Domain Releases" and then download and install the [Xming](https://sourceforge.net/projects/xming/files/Xming/6.9.0.31/Xming-6-9-0-31-setup.exe/download) and [Xming-fonts](https://sourceforge.net/projects/xming/files/Xming-fonts/7.7.0.10/Xming-fonts-7-7-0-10-setup.exe/download) packages.
