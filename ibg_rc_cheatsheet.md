@@ -1,10 +1,43 @@
+## Basic terminology
+
+### Slurm
+This is the software that the RC clusters are built on. This is software that allows users to spread *jobs* across the individual computer *nodes* that make up the cluster. Slurm commands include `sbatch`, `sinfo`, `scontrol`, and `srun`.
+
+### Node
+A single computer, which is a member of the cluster. Different nodes may have different duties, such as login nodes, file transfer nodes, and compile nodes. Different nodes may also have different characteristics, such as the number of processors and amount of memory.
+
+### Job
+Something that is to be done on the cluster. For example, run an R script, or run a series of commands to extract certain subjects and SNPs, and then analyze the results.
+
+### Queue
+*Slurm* puts *jobs* in a *queue* until they are ready to run.
+
+### Scheduler
+The components of Slurm that decide which jobs from the queue to run, and when to run them.
+
+### Core
+A core is the unit of computing used when requesting resources to be used by a *job*. In typical computing fashion, the term is *overloaded*, which means it has multiple definitions, and the correct one can only be determined by context. A computer contains one or more *CPU* (or processors) chips, which are distinct physical objects that sit in *sockets*. Each physical CPU, will contain multiple *cores*, each of which is also referred to as a CPU. So a single computer may have two CPU sockets, the CPU in each socket then each has 32 cores, for a total of 64 CPUs.
+
+### Partition
+A set of nodes that have been grouped together in Slurm. Nodes within a partition usually share a common feature (each has a GPU), a purpose (nodes for testing), or an owner (on Blanca).
+
+### QOS (Quality of Service)
+A set of QOS definitions is defined in Slurm. Every job will be associated with a particular QOS, which determines which partitions the job can run on, and also affects priority and resource limits.
+
+### Priority
+Priority is a trait of a job that the scheduler considers when deciding what jobs from the queue to run next.
+* Based on how long the job has been waiting
+* The amount of resources the job needs, so the size of the job
+* FairShare, which is based on how much total resources a user or project allocation has consumed
+* Jobs do not strictly run in priority order---a "backfill" scheduler may run low priority small jobs ahead of higher priority large jobs, if the resources to run the large jobs are not yet available
+
 ## Best practices
 
 We all share resources--learning to effectively manage these resources not only increases the efficiency of your work but that of your colleagues. Here are a few principles to consider when allocating resources.
 
 ### 1. Memory and CPU usage should be proportional.
 
-This principle is best demonstrated via example: the himem nodes `bnode0412`- `bnode0414` have 976gb of RAM and 64 logical cores each. For a job that requires 300gb of RAM, you'll want to request 300/976 * 64 ≈ 20 tasks (`--N 1 --mem 300gb --ntasks 20`; always request cpus in multiples of two, because of hyperthreading slurm will round up anyways). This helps maximize the amount of work we can accomplish simulatenously. E.g., if you were to submit 8 jobs requiring 10gb of RAM and 8 tasks each, you would be using all 64 cores (100% of cpu power) but only 80/976 gb of ram (8% of total memory), rendering the remaining RAM unusuable by anyone. Total memory and cpus vary by node, so you should consider which nodes are best for a given task an use the appropriate constraints (see 'View available nodes and their properties').
+This principle is best demonstrated via example: the himem nodes `bnode0412`- `bnode0414` have 976gb of RAM and 64 logical cores each. For a job that requires 300gb of RAM, you'll want to request 300/976 * 64 ≈ 20 tasks (`--N 1 --mem 300gb --ntasks 20`; always request cpus in multiples of two, because of hyperthreading slurm will round up anyways). This helps maximize the amount of work we can accomplish simulatenously. E.g., if you were to submit 8 jobs requiring 10gb of RAM and 8 tasks each, you would be using all 64 cores (100% of cpu power) but only 80/976 gb of ram (8% of total memory), rendering the remaining RAM unusuable by anyone. Total memory and cpus vary by node, so you should consider which nodes are best for a given task and use the appropriate constraints (see 'View available nodes and their properties').
 
 ### 2. Use the preemptable QOS when possible
 
