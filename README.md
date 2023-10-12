@@ -2,45 +2,90 @@ IBG Research Computing Cheatsheet
 =========
 
 <!--ts-->
-   * [IBG Research Computing Cheatsheet](#ibg-research-computing-cheatsheet)
-      * [Best practices](#best-practices)
-         * [1. Memory and CPU usage should be proportional.](#1-memory-and-cpu-usage-should-be-proportional)
-         * [2. Use the preemptable QOS when possible](#2-use-the-preemptable-qos-when-possible)
-         * [3. Prototype/debug before submitting large numbers of jobs](#3-prototypedebug-before-submitting-large-numbers-of-jobs)
-         * [4. Big jobs are fragile](#4-big-jobs-are-fragile)
-         * [5. Ask for help](#5-ask-for-help)
-      * [Monitoring Slurm and Job Activity](#monitoring-slurm-and-job-activity)
-         * [Monitoring running jobs](#monitoring-running-jobs)
-            * [View your running jobs](#view-your-running-jobs)
-            * [View running jobs on a particular qos](#view-running-jobs-on-a-particular-qos)
-         * [Measure performance of completed jobs](#measure-performance-of-completed-jobs)
-            * [Display jobs completed since a particular date](#display-jobs-completed-since-a-particular-date)
-            * [Display jobs' timing and memory usage](#display-jobs-timing-and-memory-usage)
-         * [View available nodes and their properties](#view-available-nodes-and-their-properties)
-      * [Example jobs](#example-jobs)
-         * [Basics](#basics)
-            * [Interactive jobs](#interactive-jobs)
-            * [Preemptable job](#preemptable-job)
-         * [Job arrays](#job-arrays)
-            * [Job array with a single numeric index](#job-array-with-a-single-numeric-index)
-            * [Job array with a single non-numeric index](#job-array-with-a-single-non-numeric-index)
-            * [Job array with a multiple simultaneous indices](#job-array-with-a-multiple-simultaneous-indices)
-            * [Job array with a multiple nested non-numeric indices](#job-array-with-a-multiple-nested-non-numeric-indices)
-            * [Job array with a multiple nested indices, one numeric](#job-array-with-a-multiple-nested-indices-one-numeric)
-      * [Defining custom functions](#defining-custom-functions)
-      * [SSH connections to RC and X11 forwarding](#ssh-connections-to-rc-and-x11-forwarding)
-         * [Mac or Linux](#mac-or-linux)
-         * [Mac X11](#mac-x11)
-         * [Windows](#windows)
-            * [PuTTY](#putty)
-            * [Bitvise](#bitvise)
-            * [X11](#x11)
-   * [Useful links](#useful-links)
-   * [Modifying this README](#modifying-this-readme)
+* [IBG Research Computing Cheatsheet](#ibg-research-computing-cheatsheet)
+   * [Basic terminology](#basic-terminology)
+      * [Slurm](#slurm)
+      * [Node](#node)
+      * [Job](#job)
+      * [Queue](#queue)
+      * [Scheduler](#scheduler)
+      * [Core](#core)
+      * [Partition](#partition)
+      * [QOS (Quality of Service)](#qos-quality-of-service)
+      * [Priority](#priority)
+   * [Best practices](#best-practices)
+      * [1. Memory and CPU usage should be proportional.](#1-memory-and-cpu-usage-should-be-proportional)
+      * [2. Use the preemptable QOS when possible](#2-use-the-preemptable-qos-when-possible)
+      * [3. Prototype/debug before submitting large numbers of jobs](#3-prototypedebug-before-submitting-large-numbers-of-jobs)
+      * [4. Big jobs are fragile](#4-big-jobs-are-fragile)
+      * [5. Ask for help](#5-ask-for-help)
+   * [Monitoring Slurm and Job Activity](#monitoring-slurm-and-job-activity)
+      * [Monitoring running jobs](#monitoring-running-jobs)
+         * [View your running jobs](#view-your-running-jobs)
+         * [View running jobs on a particular qos](#view-running-jobs-on-a-particular-qos)
+      * [Measure performance of completed jobs](#measure-performance-of-completed-jobs)
+         * [Display jobs completed since a particular date](#display-jobs-completed-since-a-particular-date)
+         * [Display jobs' timing and memory usage](#display-jobs-timing-and-memory-usage)
+      * [View available nodes and their properties](#view-available-nodes-and-their-properties)
+   * [Example jobs](#example-jobs)
+      * [Basics](#basics)
+         * [Interactive jobs](#interactive-jobs)
+         * [Preemptable job](#preemptable-job)
+      * [Job arrays](#job-arrays)
+         * [Job array with a single numeric index](#job-array-with-a-single-numeric-index)
+         * [Job array with a single non-numeric index](#job-array-with-a-single-non-numeric-index)
+         * [Job array with a multiple simultaneous indices](#job-array-with-a-multiple-simultaneous-indices)
+         * [Job array with a multiple nested non-numeric indices](#job-array-with-a-multiple-nested-non-numeric-indices)
+         * [Job array with a multiple nested indices, one numeric](#job-array-with-a-multiple-nested-indices-one-numeric)
+   * [Defining custom functions](#defining-custom-functions)
+   * [SSH connections to RC and X11 forwarding](#ssh-connections-to-rc-and-x11-forwarding)
+      * [Mac or Linux](#mac-or-linux)
+      * [Mac X11](#mac-x11)
+      * [Windows](#windows)
+         * [PuTTY](#putty)
+         * [Bitvise](#bitvise)
+         * [X11](#x11)
+* [Useful links](#useful-links)
+* [Modifying this README](#modifying-this-readme)
 
-<!-- Added by: lessem, at: Fri 20 Nov 2020 02:08:06 PM MST -->
+<!-- Created by https://github.com/ekalinin/github-markdown-toc -->
+<!-- Added by: lessem, at: Thu Oct 12 02:40:51 PM MDT 2023 -->
 
 <!--te-->
+
+## Basic terminology
+
+### Slurm
+This is the software that the RC clusters are built on. This is software that allows users to spread *jobs* across the individual computer *nodes* that make up the cluster. Slurm commands include `sbatch`, `sinfo`, `scontrol`, and `srun`.
+
+### Node
+A single computer, which is a member of the cluster. Different nodes may have different duties, such as login nodes, file transfer nodes, and compile nodes. Different nodes may also have different characteristics, such as the number of processors and amount of memory.
+
+### Job
+Something that is to be done on the cluster. For example, run an R script, or run a series of commands to extract certain subjects and SNPs, and then analyze the results.
+
+### Queue
+*Slurm* puts *jobs* in a *queue* until they are ready to run.
+
+### Scheduler
+The components of Slurm that decide which jobs from the queue to run, and when to run them.
+
+### Core
+A core is the unit of computing used when requesting resources to be used by a *job*. In typical computing fashion, the term is *overloaded*, which means it has multiple definitions, and the correct one can only be determined by context. A computer contains one or more *CPU* (or processors) chips, which are distinct physical objects that sit in *sockets*. Each physical CPU, will contain multiple *cores*, each of which is also referred to as a CPU. So a single computer may have two CPU sockets, the CPU in each socket then each has 32 cores, for a total of 64 CPUs.
+
+### Partition
+A set of nodes that have been grouped together in Slurm. Nodes within a partition usually share a common feature (each has a GPU), a purpose (nodes for testing), or an owner (on Blanca).
+
+### QOS (Quality of Service)
+A set of QOS definitions is defined in Slurm. Every job will be associated with a particular QOS, which determines which partitions the job can run on, and also affects priority and resource limits.
+
+### Priority
+Priority is a trait of a job that the scheduler considers when deciding what jobs from the queue to run next.
+
+* Based on how long the job has been waiting
+* The amount of resources the job needs, so the size of the job
+* FairShare, which is based on how much total resources a user or project allocation has consumed
+* Jobs do not strictly run in priority order---a "backfill" scheduler may run low priority small jobs ahead of higher priority large jobs, if the resources to run the large jobs are not yet available
 
 ## Best practices
 
@@ -48,7 +93,7 @@ We all share resources--learning to effectively manage these resources not only 
 
 ### 1. Memory and CPU usage should be proportional.
 
-This principle is best demonstrated via example: the himem nodes `bnode0412`- `bnode0414` have 976gb of RAM and 64 logical cores each. For a job that requires 300gb of RAM, you'll want to request 300/976 * 64 ≈ 20 tasks (`--N 1 --mem 300gb --ntasks 20`; always request cpus in multiples of two, because of hyperthreading slurm will round up anyways). This helps maximize the amount of work we can accomplish simulatenously. E.g., if you were to submit 8 jobs requiring 10gb of RAM and 8 tasks each, you would be using all 64 cores (100% of cpu power) but only 80/976 gb of ram (8% of total memory), rendering the remaining RAM unusuable by anyone. Total memory and cpus vary by node, so you should consider which nodes are best for a given task an use the appropriate constraints (see 'View available nodes and their properties').
+This principle is best demonstrated via example: the himem nodes `bnode0412`- `bnode0414` have 976gb of RAM and 64 logical cores each. For a job that requires 300gb of RAM, you'll want to request 300/976 * 64 ≈ 20 tasks (`--N 1 --mem 300gb --ntasks 20`; always request cpus in multiples of two, because of hyperthreading slurm will round up anyways). This helps maximize the amount of work we can accomplish simulatenously. E.g., if you were to submit 8 jobs requiring 10gb of RAM and 8 tasks each, you would be using all 64 cores (100% of cpu power) but only 80/976 gb of ram (8% of total memory), rendering the remaining RAM unusuable by anyone. Total memory and cpus vary by node, so you should consider which nodes are best for a given task and use the appropriate constraints (see 'View available nodes and their properties').
 
 ### 2. Use the preemptable QOS when possible
 
@@ -409,7 +454,8 @@ No additional settings are necessary to use a persistent connection, as Bitvise 
 # Useful links
 
  - [Official RC documentation](https://curc.readthedocs.io/en/latest/)
+ - [SLURM documentation](https://slurm.schedmd.com/documentation.html)
 
 # Modifying this README
 
-Do not directly modify this document directly. Instead modify `ibg_rc_cheatsheet.md` and run `compile.sh` to add TOC and create printable version. This will also update the README displayed on github. You might need to make `gh-md-toc` executable via `chmod a+x gh-md-toc` and you definitely will need to install pandoc and xelatex. TOC generation powered by [github-markdown-toc](https://github.com/ekalinin/github-markdown-toc).
+Do not directly modify this document. Instead modify `ibg_rc_cheatsheet.md` and run `compile.sh` to add a table of contents and create a printable version. This will also update the README displayed on github. You might need to make `gh-md-toc` executable via `chmod a+x gh-md-toc` and you definitely will need to install pandoc and xelatex. TOC generation powered by [github-markdown-toc](https://github.com/ekalinin/github-markdown-toc).
