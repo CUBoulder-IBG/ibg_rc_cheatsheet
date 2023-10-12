@@ -2,6 +2,7 @@
 # Useful links
 
  - [Official RC documentation](https://curc.readthedocs.io/en/latest/)
+ - [SLURM documentation](https://slurm.schedmd.com/documentation.html)
 
 # Modifying this README
 
