@@ -26,6 +26,7 @@ A set of QOS definitions is defined in Slurm. Every job will be associated with 
 
 ### Priority
 Priority is a trait of a job that the scheduler considers when deciding what jobs from the queue to run next.
+
 * Based on how long the job has been waiting
 * The amount of resources the job needs, so the size of the job
 * FairShare, which is based on how much total resources a user or project allocation has consumed
