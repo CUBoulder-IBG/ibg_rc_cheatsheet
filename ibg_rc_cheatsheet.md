@@ -96,7 +96,7 @@ If you're having difficulty figuring out how to get your jobs to run efficiently
 	  * high priority small jobs, and `preemptible` is busy or broken
 	* a limited resource with only 7 nodes, so avoid if not necessary
 
-## Monitoring Slurm and Job Activity
+## Monitoring and Adjusting Slurm and Job Activity
 
 ### Monitoring running jobs
 
@@ -130,6 +130,28 @@ sacct -S <MMDD>
 sacct -o 'jobid%20,jobname%16,state,elapsed,maxrss'
 ```
 
+### Modifying running and submitted jobs
+
+The `scontrol` command is used to change options on jobs already in the queue. [Full documentation available online](https://slurm.schedmd.com/scontrol.html).
+The general format of `scontrol` is `scontrol [options] [command] [arguements]`. The exact arguments will depend on which commands are run
+* arguments
+  * `<job_list>` a comma separated list of job IDs or a jobname, for example `2652,2653,2655`
+  * `<job_id>` a single job ID, for example `2652`
+  * `jobname=<name>` the name for one or more jobs, for example `jobname=my.jobs`
+  * `<specification>` description of the state of a job or other slurm entity, see the [full documentation](https://slurm.schedmd.com/scontrol.html) under the `show` command to `scontrol`
+  * `<entity>` a reference to a slurm job, node, etc., for example `job=2652`, `node=c3cpu-c11-u5-1`, or `node`
+* `scontrol show <entity>` show information about the specified entity, for example
+  * `scontrol show job=2522` to show details about the job
+  * `scontrol show node` to show information about all nodes
+* `scontrol hold <job_list>` prevents a job in the queue from starting, for example `scontrol hold 2652,2654` or `scontrol hold jobname=my.job`
+* `scontrol release <job_list>` releases a job under hold, and allows it to run
+* `scontrol requeue <job_list>` puts a running or recently-failed job back in the queue
+* `scontrol update <specification>` make changes to a queued job that has not yet started by a specification similar to the output of the `scontrol show` command, for example `scontrol update job=2522 timelimit=3:00:00` to change the timelimit of 2522 to 3 hours
+  * run time
+  * QOS
+  * node exclusion list
+  * array task limits
+  * dependencies
 
 ### View available nodes and their properties
 
