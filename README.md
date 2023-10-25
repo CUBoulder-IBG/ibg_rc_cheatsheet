@@ -19,13 +19,17 @@ IBG Research Computing Cheatsheet
       * [3. Prototype/debug before submitting large numbers of jobs](#3-prototypedebug-before-submitting-large-numbers-of-jobs)
       * [4. Big jobs are fragile](#4-big-jobs-are-fragile)
       * [5. Ask for help](#5-ask-for-help)
-   * [Monitoring Slurm and Job Activity](#monitoring-slurm-and-job-activity)
+   * [Clusters](#clusters)
+      * [Alpine](#alpine)
+      * [Blanca](#blanca)
+   * [Monitoring and Adjusting Slurm and Job Activity](#monitoring-and-adjusting-slurm-and-job-activity)
       * [Monitoring running jobs](#monitoring-running-jobs)
          * [View your running jobs](#view-your-running-jobs)
          * [View running jobs on a particular qos](#view-running-jobs-on-a-particular-qos)
       * [Measure performance of completed jobs](#measure-performance-of-completed-jobs)
          * [Display jobs completed since a particular date](#display-jobs-completed-since-a-particular-date)
          * [Display jobs' timing and memory usage](#display-jobs-timing-and-memory-usage)
+      * [Modifying running and submitted jobs](#modifying-running-and-submitted-jobs)
       * [View available nodes and their properties](#view-available-nodes-and-their-properties)
    * [Example jobs](#example-jobs)
       * [Basics](#basics)
@@ -49,7 +53,7 @@ IBG Research Computing Cheatsheet
 * [Modifying this README](#modifying-this-readme)
 
 <!-- Created by https://github.com/ekalinin/github-markdown-toc -->
-<!-- Added by: lessem, at: Thu Oct 12 02:40:51 PM MDT 2023 -->
+<!-- Added by: lessem, at: Wed Oct 25 12:57:24 PM MDT 2023 -->
 
 <!--te-->
 
@@ -115,7 +119,43 @@ Big here means consisting of many small tasks or consisting of one giant task th
 
 If you're having difficulty figuring out how to get your jobs to run efficiently (or run at all) don't hesitate to ask for help from your colleagues.
 
-## Monitoring Slurm and Job Activity
+## Clusters
+
+### Alpine
+
+* [RC Documentation on Alpine](https://curc.readthedocs.io/en/latest/clusters/alpine/index.html)
+* Nodes owned by the university
+* Partitions
+  * `amilan` is the default, for general purpose use
+  * `atesting` short test jobs
+  * `ainteractive` interactive jobs
+  * `acompile` building and installing software
+
+### Blanca
+
+* [RC Documentation on Blanca](https://curc.readthedocs.io/en/latest/clusters/blanca/blanca.html)
+* Nodes purchased by individual PIs
+* Idle nodes are available to all, but owners get priority access
+* IBG owns 7 nodes
+* Partitions
+  * `blanca-ibg` priority access to IBG owned nodes
+  * `blanca` access all nodes in cluster
+* QOSes
+  * `preemptable`
+    * uses the `blanca` partition
+	* ideal for large batches of jobs
+	* jobs may be "preempted" off a node if the node's owner starts a job
+	* scheduling priority isn influenced by Fairshare
+	* **this should be the QOS used for most tasks on Blanca**
+  * `blanca-ibg`
+    * the **default** QOS on Blanca, but not necessarily the best to use
+	* use for
+	  * jobs longer than 24 hours
+	  * interactive jobs
+	  * high priority small jobs, and `preemptible` is busy or broken
+	* a limited resource with only 7 nodes, so avoid if not necessary
+
+## Monitoring and Adjusting Slurm and Job Activity
 
 ### Monitoring running jobs
 
@@ -149,6 +189,28 @@ sacct -S <MMDD>
 sacct -o 'jobid%20,jobname%16,state,elapsed,maxrss'
 ```
 
+### Modifying running and submitted jobs
+
+The `scontrol` command is used to change options on jobs already in the queue. [Full documentation available online](https://slurm.schedmd.com/scontrol.html).
+The general format of `scontrol` is `scontrol [options] [command] [arguements]`. The exact arguments will depend on which commands are run
+* arguments
+  * `<job_list>` a comma separated list of job IDs or a jobname, for example `2652,2653,2655`
+  * `<job_id>` a single job ID, for example `2652`
+  * `jobname=<name>` the name for one or more jobs, for example `jobname=my.jobs`
+  * `<specification>` description of the state of a job or other slurm entity, see the [full documentation](https://slurm.schedmd.com/scontrol.html) under the `show` command to `scontrol`
+  * `<entity>` a reference to a slurm job, node, etc., for example `job=2652`, `node=c3cpu-c11-u5-1`, or `node`
+* `scontrol show <entity>` show information about the specified entity, for example
+  * `scontrol show job=2522` to show details about the job
+  * `scontrol show node` to show information about all nodes
+* `scontrol hold <job_list>` prevents a job in the queue from starting, for example `scontrol hold 2652,2654` or `scontrol hold jobname=my.job`
+* `scontrol release <job_list>` releases a job under hold, and allows it to run
+* `scontrol requeue <job_list>` puts a running or recently-failed job back in the queue
+* `scontrol update <specification>` make changes to a queued job that has not yet started by a specification similar to the output of the `scontrol show` command, for example `scontrol update job=2522 timelimit=3:00:00` to change the timelimit of 2522 to 3 hours
+  * run time
+  * QOS
+  * node exclusion list
+  * array task limits
+  * dependencies
 
 ### View available nodes and their properties
 
