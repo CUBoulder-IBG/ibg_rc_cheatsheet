@@ -60,6 +60,42 @@ Big here means consisting of many small tasks or consisting of one giant task th
 
 If you're having difficulty figuring out how to get your jobs to run efficiently (or run at all) don't hesitate to ask for help from your colleagues.
 
+## Clusters
+
+### Alpine
+
+* [RC Documentation on Alpine](https://curc.readthedocs.io/en/latest/clusters/alpine/index.html)
+* Nodes owned by the university
+* Partitions
+  * `amilan` is the default, for general purpose use
+  * `atesting` short test jobs
+  * `ainteractive` interactive jobs
+  * `acompile` building and installing software
+
+### Blanca
+
+* [RC Documentation on Blanca](https://curc.readthedocs.io/en/latest/clusters/blanca/blanca.html)
+* Nodes purchased by individual PIs
+* Idle nodes are available to all, but owners get priority access
+* IBG owns 7 nodes
+* Partitions
+  * `blanca-ibg` priority access to IBG owned nodes
+  * `blanca` access all nodes in cluster
+* QOSes
+  * `preemptable`
+    * uses the `blanca` partition
+	* ideal for large batches of jobs
+	* jobs may be "preempted" off a node if the node's owner starts a job
+	* scheduling priority isn influenced by Fairshare
+	* **this should be the QOS used for most tasks on Blanca**
+  * `blanca-ibg`
+    * the **default** QOS on Blanca, but not necessarily the best to use
+	* use for
+	  * jobs longer than 24 hours
+	  * interactive jobs
+	  * high priority small jobs, and `preemptible` is busy or broken
+	* a limited resource with only 7 nodes, so avoid if not necessary
+
 ## Monitoring Slurm and Job Activity
 
 ### Monitoring running jobs
